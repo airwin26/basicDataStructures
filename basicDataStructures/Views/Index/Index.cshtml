@@ -4,7 +4,14 @@
 }
 
 <h2>Burger Qing</h2>
-
+ <h5>Our top customers today are:</h5>
 @Html.Raw((String)ViewBag.dictData)
+<br>
+<input type="button" value="What do we love?" onclick="alertUs()"/>
+<script>
+    function alertUs() {
+        alert("WE LOVE HAMBURGERS AND GREG ANDERSON");
+    }
+</script>
 
 

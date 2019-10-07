@@ -22,12 +22,12 @@ namespace basicDataStructures.Controllers
         {
             return Convert.ToInt32(random.NextDouble() * 20);
         }
-
+        Dictionary<string, int> dictionary = new Dictionary<string, int>();
         // GET: Index
         public ActionResult Index()
         {
             Queue<string> custList = new Queue<string>();
-            Dictionary<string, int> dictionary = new Dictionary<string, int>();
+            
             
 
             // Load List with 100 Customers
@@ -52,16 +52,42 @@ namespace basicDataStructures.Controllers
             }
 
             //Display dictionary
-            int displaycounter = 0;
-            foreach (KeyValuePair<string, int> orderTotals in dictionary)
+            /* int displaycounter = 0;
+             foreach (KeyValuePair<string, int> orderTotals in dictionary)
+             {
+                 ViewBag.dictData +=
+                    // "<p>" + orderTotals + "</p>";
+
+                     "<p>" + dictionary.ElementAt(displaycounter).Key + ": " + dictionary.ElementAt(displaycounter).Value + "</p>";
+                     displaycounter++;
+
+             }*/
+
+           
+
+            var items = from pair in dictionary
+                        orderby pair.Value descending
+                        select pair;
+            foreach (KeyValuePair<string, int> kvp in items)
             {
-                ViewBag.dictData +=
-                   // "<p>" + orderTotals + "</p>";
-                    "<p>" + dictionary.ElementAt(displaycounter).Key + ": " + dictionary.ElementAt(displaycounter).Value + "</p>";
-                    displaycounter++;
+                ViewBag.dictData += string.Format("{0}: {1} ", kvp.Key, kvp.Value) + "<br>";
             }
+     
+
+
 
             return View();
         }  
+        public ActionResult button (object senter, EventArgs e)
+        {
+            var items = from pair in dictionary
+                        orderby pair.Value descending
+                        select pair;
+            foreach (KeyValuePair<string, int> kvp in items)
+            {
+                ViewBag.dictData += string.Format("{0}: {1}; ", kvp.Key, kvp.Value) + "<br>";
+            }
+            return View();
+        }
     }
 }
